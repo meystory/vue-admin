@@ -1,0 +1,17 @@
+// 整合bootstrap4, 暂不使用
+// @import "node_modules/bootstrap/scss/bootstrap";
+
+// Fonts 
+@import url(https://fonts.googleapis.com/css?family=Arimo:400,700,400italic);
+
+@import url(http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css);
+
+
+// Variables
+@import "./sass/variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+@import "./css/fonts/linecons/css/linecons.css";
