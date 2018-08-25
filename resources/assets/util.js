@@ -13,8 +13,10 @@ exports.install = function (Vue, options) {
         if(type == 'get'){
             data = { params: data};
         }
-      
+        
+        this.$Progress.start();
         axios[type](url, data).then(response=>{
+            
             if(response.data == '')
             {
                 toastr.warning('响应获取失败');
@@ -37,6 +39,7 @@ exports.install = function (Vue, options) {
                 }
                 toastr.error(response.data.msg);
             }
+            this.$Progress.finish();
 
         }).catch(error=>{
             console.log(error);

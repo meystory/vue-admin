@@ -104,8 +104,8 @@ li {
             		initData.p_title = this.p_title;
             	}
             	initData.modal_show = true;
-    			// 层级太多,通过vuex 来实现
-    			this.$store.commit('nodeEdit', initData);
+    			//通过vuex 来实现,提交给modal的数据
+    			this.$store.commit('nodeModalData', initData);
             }
 		}
 

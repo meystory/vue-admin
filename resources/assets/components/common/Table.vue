@@ -79,14 +79,10 @@
 
             },
             loadList() {
-                this.$Progress.start();
-
                 let params={ page:this.currenPage , st_desc: this.sortDesc, st_field: this.sortFiled};
-
                 if(typeof this.params !== 'undefined'){
                     params = Object.assign(params, this.params);
                 }
-
                 this.$axios({
                     type: 'get',
                     data: params,
@@ -98,7 +94,6 @@
                         this.total = temp.total;
                         this.lastPage = temp.last_page;
                         this.currentPage = temp.current_page;
-                        this.$Progress.finish();
                     },
                     fail:function(){
 
@@ -113,19 +108,12 @@
                 swal({}).then(function (res) {
                         if(res.value)
                         {
-                            axios.delete(_this.del.url,{params: {user_id:id}})
-                            .then((response)=>{
-
-                                if(response.data.status == 1)
-                                {
-                                    toastr.success(response.data.msg);
+                            _this.$axios({
+                                type: 'delete',
+                                url: _this.del.url+'/'+id,
+                                success:function(data){
                                     _this.loadList();
-                                }else
-                                {
-                                    toastr.error(response.data.msg);
                                 }
-                            }).catch((error)=>{
-
                             });
                         }
                     });

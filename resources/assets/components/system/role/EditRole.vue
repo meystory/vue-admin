@@ -31,13 +31,12 @@
         },
         created() {
             let role_id = this.$route.params.role_id; 
-            this.$Progress.start();
+            
             this.$axios({
-                type: 'post',
                 url : '/role/detail',
                 data: { role_id: role_id},
                 success:function(data){
-                    this.$Progress.finish();
+                    
                     this.nodeTree = data.node_tree;
                     this.$store.commit('checkNodes', data.role_node_ids);
                 },
@@ -46,7 +45,15 @@
         },
         methods: {
             saveRoleNode() {
-                
+                let role_nodes = this.$store.state.checkNodes;
+                let role_id = this.$route.params.role_id;
+                this.$axios({
+                    url : '/role/edit',
+                    data: { role_nodes: role_nodes,role_id: role_id},
+                    success:function(data){
+
+                    },
+                });
             }
         }
     }

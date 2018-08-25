@@ -134,8 +134,20 @@ class PermissionController extends Controller
 	 * 
 	 */
 	public function editRole()
-	{
-		
+	{	
+		//TODO::表单验证
+
+		$role_id = request('role_id', 0);
+		$role_info = request('role_info', []);
+		$role_nodes = request('role_nodes', []);
+
+		$res = $this->permissSer->updateRole($role_id, $role_info, $role_nodes);
+
+		$msg = $role_id ? '修改' : '新增';
+		if(!$res){
+			return self::error($msg.'失败');
+		}
+		return self::success($msg.'成功!');
 	}
 
 

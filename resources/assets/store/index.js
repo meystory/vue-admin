@@ -9,18 +9,7 @@ const state  = {
 	auth : window.auth,
 	permissions: window.permissions,
 	menuTree: window.menuTree,
-	nodeEdit : {
-		node_id: null,
-        p_title : '根节点',
-        title: '',
-        action:'',
-        parent_id: null,
-        is_show: 2,
-        level: null,
-        linecons: '',
-        sort: 50,
-        modal_show: false,
-   	},
+	nodeModalData : {},
     checkNodes:[],
 };
 

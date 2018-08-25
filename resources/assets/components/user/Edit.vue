@@ -141,9 +141,7 @@
 			this.user_id = this.$route.params.user_id; 
 
 			//根据id 读取表单数据
-			if(this.user_id)
-			{	
-				this.$Progress.start();
+			if(this.user_id){	
 
 				this.$axios({
 					type: 'get',
@@ -153,7 +151,6 @@
 						for(let i in this.formData){
 							this.formData[i] = data[i];
 						}	
-						this.$Progress.finish();
 					}
 
 				});

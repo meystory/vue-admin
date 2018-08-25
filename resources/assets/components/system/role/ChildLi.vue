@@ -106,7 +106,7 @@ li {
                 this.$emit('emitParent');
 
             },
-            emitChild(checked,node_id) {
+            emitChild(checked) {
                 //重置下级选中状态
                 this.resetCheck(checked);
 
@@ -120,8 +120,8 @@ li {
             resetCheck(checked) {
                 let index = this.checkedIds.indexOf(this.model.node_id);
                 //当前model取消选中
-                if(!checked){
-                    this.checkedIds.splice(index,1);
+                if(!checked && index !== -1){
+                    this.checkedIds.splice(index,1); //否则会出现splice(-1,1)的问题
                 }
 
                 //当前model选中
@@ -138,7 +138,7 @@ li {
                         childChecked ++;
                     }
                 }
-                //重置选中状态
+                //根据子节点选择状态，重置当前model选中状态
                 this.resetCheck(childChecked);
                 // //递归上分发通知
                 this.$emit('emitParent');

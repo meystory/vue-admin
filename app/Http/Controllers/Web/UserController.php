@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
-use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -17,9 +17,10 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserService $userSer)
     {
         $this->middleware('auth');
+        $this->userSer = $userSer;
     }
 
     /**
@@ -29,27 +30,7 @@ class UserController extends Controller
     {   
         $data = request()->all();
 
-        $list = User::with(['depa'=>function($query){
-            $query->select('department_id','name');
-        }]);
-
-        if(!empty($data['keywords']))
-        {
-            $list = $list->where('username',$data['keywords'])->orWhere('name',$data['keywords']);
-        }
-
-        if(!empty($data['st_filed']))
-        {   
-            $sort = $data['st_desc'] ? 'desc': 'asc';
-
-            $list = $list->orderBy($data['st_filed'] , $sort);
-        }
-
-        $page = empty($data['page']) ? 1 : $data['page'];
-
-        $limit = empty($data['limit']) ? 10 : $data['limit'];
-
-        $list = $list->paginate($limit, ['*'], 'page', $page);
+        $list = $this->userSer->getList($data);
 
         return self::success('',compact('list'));
     }
@@ -70,27 +51,14 @@ class UserController extends Controller
             'sex'=> $request->get('sex',1),
             'depa_id' => $request->get('depa_id',0),
         ];
-
         //TODO:文件类处理转换为存储url
         $avatar = self::upFile($request->file('avatar'));
-
         $data['avatar'] = $avatar;
+        $user_id = $request->get('user_id', 0);
+        $msg = $user_id ? '修改' : '新增';
 
-        $user_id = $request->get('user_id');
-
-        if($user_id)
-        {   
-            $msg = '修改';
-            $res = User::where(['user_id'=>$user_id, 'is_admin'=>2])->update($data);
-        }else
-        {   
-            $msg = '新增';
-            $data['password'] = bcrypt('123123');
-            $res = User::create($data);
-        }
-
-        if(!$res)
-        {
+        $res = $this->userSer->updateUser($user_id, $data);
+        if(!$res) {
             return self::error($msg.'失败');
         }
         return self::success($msg.'成功');
@@ -101,10 +69,9 @@ class UserController extends Controller
      */
     public function info()
     {
-        $user_id = request()->get('user_id',0);
-        $user = User::find($user_id);
-        if(!$user)
-        {
+        $user_id = request('user_id',0);
+        $user = $this->userSer->getInfo($user_id);
+        if(!$user) {
             return self::error('用户不存在');
         }
         return self::success('', $user);
@@ -113,32 +80,22 @@ class UserController extends Controller
     /**
      * 删除
      */
-    public function del()
-    {
-        $user_id = request()->get('user_id');
-
-        $user = User::find($user_id);
-        if(!$user)
-        {
-           return self::error('此用户不存在!'); 
+    public function del($user_id=0)
+    {   
+        $res = $this->userSer->delUser($user_id);
+        if(!$res) {
+            return self::error('删除失败');
         }
-
-        if($user->is_admin == 1)
-        {
-            return self::error('此用户无法删除');
-        }
-        $user->delete();
         return self::success('删除成功');
 
     }
 
     public static function upFile($file)
     {   
-        // dump($file);
+
         if(!$file instanceof UploadedFile){
             return '';
         }
-        
         
         $extension = $file->getClientOriginalExtension(); // 文件后缀
         $mime_type = $file->getMimeType();  //文件类型

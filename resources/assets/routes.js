@@ -20,13 +20,13 @@ export default [
                 path: 'list',
                 name: '节点列表',
                 meta: {'parent':'/system'},
-                component: require('./components/system/Node.vue')
+                component: require('./components/system/node/Node.vue')
             },
             {
                 path: 'edit/:node_id?',
                 name: '修改/新增节点',
                 meta: {'parent':'/system'},
-                component: require('./components/system/Node.vue')
+                component: require('./components/system/node/Node.vue')
             }
 
         ]
@@ -42,13 +42,13 @@ export default [
                 path: 'list',
                 name: '角色列表',
                 meta: {'parent':'/system'},
-                component: require('./components/system/Role.vue')
+                component: require('./components/system/role/Role.vue')
             },
             {
                 path: 'edit/:role_id?',
                 name: '修改/新增角色',
                 meta: {'parent':'/system'},
-                component: require('./components/system/EditRole.vue')
+                component: require('./components/system/role/EditRole.vue')
             }
 
         ]

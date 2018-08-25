@@ -26,7 +26,7 @@ Route::group(['middleware' => ['auth'],'namespace'=>'Web'], function () {
 		Route::get('list','UserController@getList');
 		Route::get('info', 'UserController@info');
 		Route::post('add', 'UserController@postAdd');
-		Route::delete('del', 'UserController@del');
+		Route::delete('del/{id}', 'UserController@del')->where('id','[1-9](\d+)?');
 	});
 	Route::group(['prefix'=>'node'],function(){
 		Route::get('list','PermissionController@getNodeTree');
@@ -36,9 +36,10 @@ Route::group(['middleware' => ['auth'],'namespace'=>'Web'], function () {
 
 	Route::group(['prefix'=>'role'],function(){
 		Route::get('list','PermissionController@getRoleList');
-		Route::get('add','PermissionController@addRole');
-		Route::get('edit','PermissionController@editRole');
 		Route::post('detail', 'PermissionController@roleDetail');
+		Route::post('edit','PermissionController@editRole');
+		Route::delete('del','PermissionController@delRole');
+		
 	});
 	Route::post('/fileUp', 'UserController@fileUp');
 

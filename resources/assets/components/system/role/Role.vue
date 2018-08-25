@@ -10,7 +10,7 @@
                 <div class="col-xs-8"></div>
                 <div class="col-xs-2">
 
-                        <button type="button" class="btn btn-turquoise btn-sm" v-if="can('/role/add')" @click="editRole()"><i
+                        <button type="button" class="btn btn-turquoise btn-sm" v-if="can('/role/edit')" @click="editRole()"><i
                                         class="fa fa-users"></i>&ensp;新建</button>
                 </div>
             </div>
@@ -38,11 +38,11 @@
                 </template>
                 <template slot="actions" slot-scope="items">
 
-                        <a href="javascript:void(0);"  @click.prevent="editRole(items.item.role_id)"  class="btn btn-secondary btn-sm btn-icon icon-left">
+                        <a href="javascript:void(0);"  v-if="can('/role/edit')" @click.prevent="editRole(items.item.role_id)"  class="btn btn-secondary btn-sm btn-icon icon-left">
                             修改
                         </a>
                         
-                        <a href="javascript:void(0);"  @click.prevent="$refs.table.onDel()" class="btn btn-danger btn-sm btn-icon icon-left">
+                        <a href="javascript:void(0);"  v-if="can('/role/del')" @click.prevent="$refs.table.onDel({role_id:items.item.role_id})" class="btn btn-danger btn-sm btn-icon icon-left">
                             删除
                         </a>
                         
@@ -53,7 +53,7 @@
             </vTable>
 
             <!-- 详情展示模态 -->
-            <RoleDetailModal ref="detail-modal"></RoleDetailModal>
+            <!-- <modal ref="detail-modal"></modal> -->
         </div>
      
     </div>
@@ -66,11 +66,11 @@
 
 <script>
     import vTable from 'components/common/Table.vue';
-    import RoleDetailModal from 'components/system/RoleDetailModal.vue';
+    import modal from './Modal.vue';
     export default {
         components: { 
             vTable , 
-            RoleDetailModal
+            modal
         },
         data(){
             return {
@@ -101,6 +101,15 @@
             },
             getDetail(role_id) {
                 this.$refs['detail-modal'].loadTree(role_id);
+            },
+            delRole() {
+                this.$axios({
+                    url : '/role/del',
+                    data: { role_id: role_id},
+                    success:function(data){
+
+                    },
+                });
             }
         }
     }

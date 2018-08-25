@@ -109,7 +109,7 @@
 
 
 <script>
-    import ChildLi from 'components/common/ChildLi.vue';
+    import ChildLi from './ChildLi.vue';
     export default {
         components: {
             'child-li': ChildLi
@@ -124,17 +124,20 @@
                     text: '不显示',
                 }],
 
-                nodeTree:[]
+                nodeTree:[],
+
+                
             }
         },
+        beforeCreate() {
+            //模态数据重置，获取初始值
+            this.$store.commit('nodeModalReset');
+        },
         created() {
-
-            this.$Progress.start();
             this.$axios({
                 type: 'get',
                 url : '/node/list',
                 success:function(data){
-                    this.$Progress.finish();
                     this.nodeTree = data;
                 },
                 
@@ -142,55 +145,32 @@
         },
         computed: {
             modalData() {
-                return this.$store.state.nodeEdit;
+                return this.$store.state.nodeModalData;
             },
             showModal() {
                 return  this.modalData.modal_show;
             }
         },
-
-        watch: {
-            modalData(data) {
-
-                for(let index in this.modalData)
-                {
-                    this.modalData[index] = data[index] ? data[index] : this.modalData[index];
-                }
-            }
-        },
-        mounted() {
-        	
-        },
         methods: {
             submitNode() {
-
                 let is_edit = this.modalData.node_id ? true : false;
                 this.$validator.validate().then(result=>{
-                    if(result)
-                    {
+                    if(result){
                         let url = is_edit ? '/node/edit' : '/node/add';
-                        this.$Progress.start();
-
                         this.$axios({
                             url : url,
                             data: this.modalData,
                             success:function(data){
-                                
-                                this.$Progress.finish();
                                 //重载节点树
                                 this.nodeTree = data.nodeTree;
-
-
                                 if(is_edit) {
                                     //TODO: 更新vuex 当前用户权限列表
                                     this.$store.commit('permissions', data.permissions);
                                 }
-
                                 //更新vuex 菜单
                                 if(data.menuTree) {
                                     this.$store.commit('menuTree', data.menuTree);
                                 }
-
                                 this.closeModal();
                             },
                             
@@ -200,10 +180,11 @@
             },
             closeModal() {
                 this.modalData.modal_show = false;
-                this.$store.commit('nodeEdit', this.modalData);
+                this.$store.commit('nodeModalReset');//重置
             },
             addRootNode() {
-                this.$store.commit('nodeEdit', { parent_id:0 , modal_show:true, level:1});
+                //添加根节点。提交初始数据
+                this.$store.commit('nodeModalData', { parent_id:0 , modal_show:true, level:1});
             }
         }
     }

@@ -90,4 +90,31 @@ class PermissionService extends BaseService
 		}
 		return $tree;
 	}
+
+	/**
+	 * @param int $role 角色id
+	 * @param array $role_info 角色基本信息
+	 * @param array $role_nodes 角色关联的节点
+	 */
+	public function updateRole($role_id, $role_info=[] ,$role_nodes)
+	{
+
+		if($role_id){
+			$role = Role::find($role_id);
+		}else{
+			$role = Role::create($role_info);
+		}
+
+		if(!$role){
+			return false;
+		}
+
+		//更新角色基本信息
+		if($role_info){
+			$role->update($role_info);
+		}
+		//同步节点关系
+		$role->nodes()->sync($role_nodes);
+		return true;
+	}
 }

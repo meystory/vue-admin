@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-xs-2">
 
-                        <button type="button" class="btn btn-turquoise btn-sm" v-if="can('/node/edit')" @click="editUser()"><i
+                        <button type="button" class="btn btn-turquoise btn-sm" v-if="can('/user/edit')" @click="editUser()"><i
                                         class="fa fa-users"></i>&ensp;新建</button>
 
                 </div>
@@ -62,11 +62,11 @@
                 </template>
                 <template slot="actions" slot-scope="items">
 
-                        <a href="javascript:void(0);" v-if="items.item.is_admin != 1" @click.prevent="editUser(items.item.user_id)"  class="btn btn-secondary btn-sm btn-icon icon-left">
+                        <a href="javascript:void(0);" v-if="can('/user/edit')" @click.prevent="editUser(items.item.user_id)"  class="btn btn-secondary btn-sm btn-icon icon-left">
                             修改
                         </a>
                         
-                        <a href="javascript:void(0);"  v-if="items.item.is_admin != 1"  @click.prevent="$refs.table.onDel(items.item.user_id)" class="btn btn-danger btn-sm btn-icon icon-left">
+                        <a href="javascript:void(0);"  v-if="can('/user/del')" @click.prevent="$refs.table.onDel(items.item.user_id)" class="btn btn-danger btn-sm btn-icon icon-left">
                             删除
                         </a>
                         
