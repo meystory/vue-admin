@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-
+use Event;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -25,11 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
-        event('clear.node',function(){
-            Cache::forget('user_node_tree');
 
-            dump(111);
-        });
     }
 }

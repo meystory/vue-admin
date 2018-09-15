@@ -1012,7 +1012,7 @@ class Builder
         // We will keep track of how many wheres are on the query before running the
         // scope so that we can properly group the added scope constraints in the
         // query as their own isolated nested where statement and avoid issues.
-        $originalWhereCount = count($query->wheres);
+        $originalWhereCount = count((array)$query->wheres);
 
         $result = $scope(...array_values($parameters)) ?: $this;
 
