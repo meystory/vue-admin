@@ -44,6 +44,7 @@ class UserService
 
         $page = empty($param['page']) ? 1 : $param['page'];
 
+        $limit = empty($param['limit']) ? $limit : $param['limit'];
         return $list->paginate($limit, ['*'], 'page', $page);
 	}
 
