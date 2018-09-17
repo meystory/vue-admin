@@ -116,7 +116,7 @@
 	</div>
 </template>
 <script type="text/javascript">
-	import ImgCropper from './../ImgCropper.vue';
+	import ImgCropper from 'components/ImgCropper.vue';
 	export default {
 		components:{
 			ImgCropper

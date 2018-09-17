@@ -41,11 +41,17 @@ router.beforeEach((to, from, next) => {
     let strPath = to.path.replace(/\/\d+$/,'');
 
   	if(to.path != '/' && store.state.permissions.indexOf(strPath) === -1){
+
   		setTimeout(function(){
-  			toastr.error('您没有访问权限!')
+  			toastr.error('您没有访问权限!');
   		},0);
     	next(false);
   	}else {
+        // 储存当前选中siderbar
+        if (to.meta.parent) {
+            store.state.modular.parent = to.meta.parent;
+            store.state.modular.child = to.path;
+        }
         next();
     }
 });

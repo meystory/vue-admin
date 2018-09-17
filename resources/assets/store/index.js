@@ -9,6 +9,10 @@ const state  = {
 	auth : window.auth,
 	permissions: window.permissions,
 	menuTree: window.menuTree,
+	modular: {
+		parent: '',
+		child: ''
+	},
 	nodeModalData : {},
     checkNodes:[],
 };
