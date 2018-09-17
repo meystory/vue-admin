@@ -2476,8 +2476,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -49752,7 +49750,11 @@ var render = function() {
         _vm._l(_vm.menuTree, function(menu) {
           return _c(
             "li",
-            { class: { "expanded active": menu.action == _vm.modular.parent } },
+            {
+              class: {
+                "opened expanded active": menu.action == _vm.modular.parent
+              }
+            },
             [
               _c("a", { attrs: { href: "#" } }, [
                 _c("i", { class: menu.linecons }),
@@ -50987,7 +50989,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n\t部门编辑\n")])
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -51119,7 +51121,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n\t部门列表\n")])
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true

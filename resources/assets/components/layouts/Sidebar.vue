@@ -29,12 +29,10 @@
                     </div>                                
                 </header>
                         
-                
-                        
                 <ul id="main-menu" class="main-menu">
                    <!--  add class "multiple-expanded" to allow multiple submenus to open
                     class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-                    <li v-for="menu in menuTree" :class="{'expanded active': menu.action == modular.parent}">
+                    <li v-for="menu in menuTree" :class="{'opened expanded active': menu.action == modular.parent}">
                         <a href="#">
                             <i :class="menu.linecons"></i>
                             <span class="title">{{ menu.title }}</span>

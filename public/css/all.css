@@ -6874,7 +6874,7 @@ body {
     margin-right: 10px;
   }
   .sidebar-menu.collapsed .main-menu > li:hover > ul {
-    display: block!important;
+    display: block;
   }
 }
 .page-body.right-sidebar .page-container {
