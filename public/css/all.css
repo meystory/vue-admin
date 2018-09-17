@@ -6450,7 +6450,7 @@ body {
 .page-container .main-content {
   display: table-cell;
   position: relative;
-  z-index: 1;
+  z-index: 3;
   padding: 30px;
   padding-bottom: 0;
   vertical-align: top;

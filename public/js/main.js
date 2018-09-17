@@ -2476,21 +2476,367 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])(['menuTree', 'modular'])),
+    created: function created() {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/components/structure/user/Edit.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_components_ImgCropper_vue__ = __webpack_require__("./resources/assets/components/ImgCropper.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_components_ImgCropper_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_components_ImgCropper_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])(['menuTree'])),
+	components: {
+		ImgCropper: __WEBPACK_IMPORTED_MODULE_0_components_ImgCropper_vue___default.a
+	},
+	data: function data() {
+		return {
+			formData: {
+				username: '',
+				name: '',
+				mobile: '',
+				depa_id: 0,
+				email: '',
+				sex: 1,
+				avatar: '/images/user-2.png'
+			},
+			user_id: null,
+			fileInfo: ''
+
+		};
+	},
+	created: function created() {
+		this.user_id = this.$route.params.user_id;
+
+		//根据id 读取表单数据
+		if (this.user_id) {
+
+			this.$axios({
+				type: 'get',
+				url: '/user/info',
+				data: { user_id: this.user_id },
+				success: function success(data) {
+					for (var i in this.formData) {
+						this.formData[i] = data[i];
+					}
+				}
+
+			});
+		}
+	},
+
+	methods: {
+		formSubmit: function formSubmit() {
+			var _this = this;
+
+			this.$validator.validate().then(function (result) {
+				if (result) {
+					//提交数据
+					var data = new FormData(_this.$refs['user-form']);
+					data.append('user_id', _this.user_id);
+					data.append('avatar', _this.fileInfo);
+
+					_this.$axios({
+						url: '/user/add',
+						data: data,
+						success: function success(data) {
+
+							this.$router.push({ path: '/user/list' });
+						}
+
+					});
+				}
+			});
+		},
+		getFileInfo: function getFileInfo(data) {
+			this.fileInfo = data.file;
+			this.formData.avatar = data.src;
+		}
+	}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/components/structure/user/List.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_components_common_Table_vue__ = __webpack_require__("./resources/assets/components/common/Table.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_components_common_Table_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_components_common_Table_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { vTable: __WEBPACK_IMPORTED_MODULE_0_components_common_Table_vue___default.a },
     data: function data() {
         return {
-            modular: {
-                parent: this.$route.meta.parent,
-                child: this.$route.path
+            lists: [],
+            ths: {
+                username: { label: '账号' },
+                name: { label: '姓名' },
+                depa: { label: '部门' },
+                created_at: { label: '创建时间', sortable: true },
+                actions: { label: '操作' }
+            },
+            ajaxUrl: "/user/list",
+            params: {
+                limit: 10,
+                keywords: ""
+            },
+
+            del: {
+                url: '/user/del',
+                title: '确定要删除该用户吗?'
             }
         };
     },
-    mounted: function mounted() {}
+
+    computed: {
+        limit: {
+            get: function get() {
+                return this.params.limit;
+            },
+            set: function set(val) {
+                var _this = this;
+
+                this.$validator.validate().then(function (result) {
+                    if (result) {
+                        _this.params.limit = val;
+                        _this.$refs.table.loadList();
+                    }
+                });
+            }
+        }
+    },
+    methods: {
+        doSearch: function doSearch() {
+            var _this2 = this;
+
+            this.$validator.validate().then(function (result) {
+                if (result) {
+                    _this2.$refs.table.loadList();
+                }
+            });
+        },
+        editUser: function editUser(user_id) {
+
+            var url = user_id ? '/user/edit/' + user_id : '/user/edit';
+
+            this.$router.push({ path: url });
+        }
+    }
 });
 
 /***/ }),
@@ -3262,362 +3608,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 data: { role_id: role_id },
                 success: function success(data) {}
             });
-        }
-    }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/components/user/Edit.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImgCropper_vue__ = __webpack_require__("./resources/assets/components/ImgCropper.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImgCropper_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ImgCropper_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-	components: {
-		ImgCropper: __WEBPACK_IMPORTED_MODULE_0__ImgCropper_vue___default.a
-	},
-	data: function data() {
-		return {
-			formData: {
-				username: '',
-				name: '',
-				mobile: '',
-				depa_id: 0,
-				email: '',
-				sex: 1,
-				avatar: '/images/user-2.png'
-			},
-			user_id: null,
-			fileInfo: ''
-
-		};
-	},
-	created: function created() {
-		this.user_id = this.$route.params.user_id;
-
-		//根据id 读取表单数据
-		if (this.user_id) {
-
-			this.$axios({
-				type: 'get',
-				url: '/user/info',
-				data: { user_id: this.user_id },
-				success: function success(data) {
-					for (var i in this.formData) {
-						this.formData[i] = data[i];
-					}
-				}
-
-			});
-		}
-	},
-
-	methods: {
-		formSubmit: function formSubmit() {
-			var _this = this;
-
-			this.$validator.validate().then(function (result) {
-				if (result) {
-					//提交数据
-					var data = new FormData(_this.$refs['user-form']);
-					data.append('user_id', _this.user_id);
-					data.append('avatar', _this.fileInfo);
-
-					_this.$axios({
-						url: '/user/add',
-						data: data,
-						success: function success(data) {
-
-							this.$router.push({ path: '/user/list' });
-						}
-
-					});
-				}
-			});
-		},
-		getFileInfo: function getFileInfo(data) {
-			this.fileInfo = data.file;
-			this.formData.avatar = data.src;
-		}
-	}
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/components/user/List.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_components_common_Table_vue__ = __webpack_require__("./resources/assets/components/common/Table.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_components_common_Table_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_components_common_Table_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: { vTable: __WEBPACK_IMPORTED_MODULE_0_components_common_Table_vue___default.a },
-    data: function data() {
-        return {
-            lists: [],
-            ths: {
-                username: { label: '账号' },
-                name: { label: '姓名' },
-                depa: { label: '部门' },
-                created_at: { label: '创建时间', sortable: true },
-                actions: { label: '操作' }
-            },
-            ajaxUrl: "/user/list",
-            params: {
-                limit: 10,
-                keywords: ""
-            },
-
-            del: {
-                url: '/user/del',
-                title: '确定要删除该用户吗?'
-            }
-        };
-    },
-
-    computed: {
-        limit: {
-            get: function get() {
-                return this.params.limit;
-            },
-            set: function set(val) {
-                var _this = this;
-
-                this.$validator.validate().then(function (result) {
-                    if (result) {
-                        _this.params.limit = val;
-                        _this.$refs.table.loadList();
-                    }
-                });
-            }
-        }
-    },
-    methods: {
-        doSearch: function doSearch() {
-            var _this2 = this;
-
-            this.$validator.validate().then(function (result) {
-                if (result) {
-                    _this2.$refs.table.loadList();
-                }
-            });
-        },
-        editUser: function editUser(user_id) {
-
-            var url = user_id ? '/user/edit/' + user_id : '/user/edit';
-
-            this.$router.push({ path: url });
         }
     }
 });
@@ -49760,7 +49750,11 @@ var render = function() {
         _vm._l(_vm.menuTree, function(menu) {
           return _c(
             "li",
-            { class: { "expanded active": menu.action == _vm.modular.parent } },
+            {
+              class: {
+                "opened expanded active": menu.action == _vm.modular.parent
+              }
+            },
             [
               _c("a", { attrs: { href: "#" } }, [
                 _c("i", { class: menu.linecons }),
@@ -49772,17 +49766,6 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "ul",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: menu.action == _vm.modular.parent,
-                      expression: "menu.action == modular.parent"
-                    }
-                  ],
-                  staticStyle: { display: "block" }
-                },
                 _vm._l(menu.child, function(child) {
                   return _c(
                     "li",
@@ -50022,6 +50005,526 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-04a24590\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/structure/user/Edit.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-sm-12" }, [
+    _c("div", { staticClass: "panel panel-default" }, [
+      _c("div", { staticClass: "panel-heading" }, [
+        _c("h3", { staticClass: "panel-title" }, [
+          _vm._v(_vm._s(_vm.formData.user_id ? "修改用户" : "新建用户"))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-body" }, [
+        _c(
+          "form",
+          {
+            ref: "user-form",
+            staticClass: "form-horizontal",
+            attrs: { role: "form" }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "form-group",
+                class: _vm.errors.has("username") ? "has-error" : ""
+              },
+              [
+                _c("label", { staticClass: "col-sm-1 control-label" }, [
+                  _vm._v("账 号")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-7" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.formData.username,
+                        expression: "formData.username",
+                        modifiers: { trim: true }
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: {
+                          required: true,
+                          alpha_dash: true,
+                          max: 20,
+                          min: 6
+                        },
+                        expression:
+                          "{ required:true, alpha_dash: true, max:20, min:6 }"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "username",
+                      "data-vv-as": "账号",
+                      autocomplete: "off"
+                    },
+                    domProps: { value: _vm.formData.username },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "username",
+                          $event.target.value.trim()
+                        )
+                      },
+                      blur: function($event) {
+                        _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "help-block" }, [
+                  _vm._v(" " + _vm._s(_vm.errors.first("username")))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-group",
+                class: _vm.errors.has("name") ? "has-error" : ""
+              },
+              [
+                _c("label", { staticClass: "col-sm-1 control-label" }, [
+                  _vm._v("姓名")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-7" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: { required: true, zh_char: [2, 10] },
+                        expression: "{ required:true, zh_char:[2,10]}"
+                      },
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.formData.name,
+                        expression: "formData.name",
+                        modifiers: { trim: true }
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "name",
+                      placeholder: "",
+                      "data-vv-as": "姓名",
+                      autocomplete: "off"
+                    },
+                    domProps: { value: _vm.formData.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "name",
+                          $event.target.value.trim()
+                        )
+                      },
+                      blur: function($event) {
+                        _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "help-block" }, [
+                  _vm._v(" " + _vm._s(_vm.errors.first("name")))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "col-sm-1 control-label" }, [
+                _vm._v("头像")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-7" }, [
+                _c(
+                  "div",
+                  { staticStyle: { width: "128px", height: "128px" } },
+                  [
+                    _c("img", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.formData.avatar,
+                          expression: "formData.avatar"
+                        }
+                      ],
+                      staticStyle: { width: "100%", height: "100%" },
+                      attrs: { src: _vm.formData.avatar }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticStyle: { "margin-top": "10px" } },
+                  [_c("ImgCropper", { on: { cropperImg: _vm.getFileInfo } })],
+                  1
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-group",
+                class: _vm.errors.has("mobile") ? "has-error" : ""
+              },
+              [
+                _c("label", { staticClass: "col-sm-1 control-label" }, [
+                  _vm._v("手机号")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-7" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: { required: true, mobile: true },
+                        expression: "{ required:true, mobile:true }"
+                      },
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.formData.mobile,
+                        expression: "formData.mobile",
+                        modifiers: { trim: true }
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "mobile",
+                      placeholder: "",
+                      autocomplete: "off"
+                    },
+                    domProps: { value: _vm.formData.mobile },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "mobile",
+                          $event.target.value.trim()
+                        )
+                      },
+                      blur: function($event) {
+                        _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "help-block" }, [
+                  _vm._v(" " + _vm._s(_vm.errors.first("mobile")))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-group",
+                class: _vm.errors.has("email") ? "has-error" : ""
+              },
+              [
+                _c("label", { staticClass: "col-sm-1 control-label" }, [
+                  _vm._v("邮 箱")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-7" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: { required: true, email: true },
+                        expression: "{ required:true, email:true }"
+                      },
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.formData.email,
+                        expression: "formData.email",
+                        modifiers: { trim: true }
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "email",
+                      placeholder: "",
+                      autocomplete: "off"
+                    },
+                    domProps: { value: _vm.formData.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "email",
+                          $event.target.value.trim()
+                        )
+                      },
+                      blur: function($event) {
+                        _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "help-block" }, [
+                  _vm._v(" " + _vm._s(_vm.errors.first("email")))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-group",
+                class: _vm.errors.has("depa_id") ? "has-error" : ""
+              },
+              [
+                _c("label", { staticClass: "col-sm-1 control-label" }, [
+                  _vm._v("部 门")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-7" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formData.depa_id,
+                          expression: "formData.depa_id"
+                        },
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: { select_id: true },
+                          expression: "{ select_id:true }"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { name: "depa_id", "data-vv-as": "部门" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.formData,
+                            "depa_id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0" } }, [
+                        _vm._v("请选择")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "1" } }, [
+                        _vm._v("总公司")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "2" } }, [
+                        _vm._v("销售部")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "3" } }, [
+                        _vm._v("研发部")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "4" } }, [
+                        _vm._v("宣传部")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "help-block" }, [
+                  _vm._v(" " + _vm._s(_vm.errors.first("depa_id")))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "col-sm-1 control-label" }, [
+                _vm._v("性 别")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-7" }, [
+                _c("p", [
+                  _c("label", { staticClass: "cbr-inline" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "cbr-replaced cbr-primary cbr-radio",
+                        class: { "cbr-checked": _vm.formData.sex == 1 }
+                      },
+                      [
+                        _c("div", { staticClass: "cbr-input" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.formData.sex,
+                                expression: "formData.sex"
+                              }
+                            ],
+                            staticClass: "cbr cbr-done",
+                            attrs: { type: "radio", name: "sex", value: "1" },
+                            domProps: {
+                              checked: _vm._q(_vm.formData.sex, "1")
+                            },
+                            on: {
+                              change: function($event) {
+                                _vm.$set(_vm.formData, "sex", "1")
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(0)
+                      ]
+                    ),
+                    _vm._v("\n\t\t\t\t\t\t\t\t男\n\t\t\t\t\t\t\t")
+                  ]),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "cbr-inline" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "cbr-replaced cbr-primary cbr-radio",
+                        class: { "cbr-checked": _vm.formData.sex == 2 }
+                      },
+                      [
+                        _c("div", { staticClass: "cbr-input" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.formData.sex,
+                                expression: "formData.sex"
+                              }
+                            ],
+                            staticClass: "cbr cbr-done",
+                            attrs: { type: "radio", name: "sex", value: "2" },
+                            domProps: {
+                              checked: _vm._q(_vm.formData.sex, "2")
+                            },
+                            on: {
+                              change: function($event) {
+                                _vm.$set(_vm.formData, "sex", "2")
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(1)
+                      ]
+                    ),
+                    _vm._v("\n\t\t\t\t\t\t\t\t女\n\t\t\t\t\t\t\t")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "col-sm-1 control-label" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-7" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-gray  pull-right",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.formSubmit()
+                      }
+                    }
+                  },
+                  [_vm._v("提 交")]
+                )
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "cbr-state" }, [_c("span")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "cbr-state" }, [_c("span")])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-04a24590", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-057c62f3\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/layouts/Error.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50054,6 +50557,27 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-057c62f3", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-093ec90f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/notify/List.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n\t消息列表\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-093ec90f", module.exports)
   }
 }
 
@@ -50158,6 +50682,322 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-12817f2e", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-154bc3b8\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/structure/user/List.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "panel panel-default" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel-body" }, [
+      _c(
+        "div",
+        { staticClass: "form-inline dt-bootstrap" },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-xs-2" }, [
+              _c("div", { staticClass: "from-group" }, [
+                _c("label", [
+                  _vm._v("每页 \r\n                            "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.limit,
+                          expression: "limit"
+                        }
+                      ],
+                      staticClass: "form-control input-sm",
+                      attrs: { name: "limit" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.limit = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "5" } }, [_vm._v("5")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "20" } }, [_vm._v("20")])
+                    ]
+                  ),
+                  _vm._v(" 条 \r\n                        ")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-xs-8" }, [
+              _c("div", { staticClass: "pull-left" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.params.keywords,
+                        expression: "params.keywords",
+                        modifiers: { trim: true }
+                      }
+                    ],
+                    staticClass: "form-control input-sm",
+                    attrs: {
+                      type: "text",
+                      name: "keywords",
+                      placeholder: "用户名/账户"
+                    },
+                    domProps: { value: _vm.params.keywords },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.params,
+                          "keywords",
+                          $event.target.value.trim()
+                        )
+                      },
+                      blur: function($event) {
+                        _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "pull-left",
+                  staticStyle: { "margin-left": "10px" }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-gray btn-sm",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.doSearch()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-search" })]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-xs-2" }, [
+              _vm.can("/user/edit")
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-turquoise btn-sm",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.editUser()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-users" }), _vm._v(" 新建")]
+                  )
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c("vTable", {
+            ref: "table",
+            attrs: {
+              ajaxUrl: _vm.ajaxUrl,
+              params: _vm.params,
+              lists: _vm.lists,
+              perPage: _vm.limit,
+              ths: _vm.ths,
+              del: _vm.del
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "username",
+                fn: function(items) {
+                  return [
+                    _vm._v(
+                      "\r\n                        " +
+                        _vm._s(items.value) +
+                        "\r\n                "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "name",
+                fn: function(items) {
+                  return [
+                    _vm._v(
+                      "\r\n                        " +
+                        _vm._s(items.value) +
+                        "\r\n                "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "depa",
+                fn: function(items) {
+                  return [
+                    _vm._v(
+                      "\r\n                        " +
+                        _vm._s(items.value ? items.value.name : "") +
+                        "\r\n                "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "created_at",
+                fn: function(items) {
+                  return [
+                    _vm._v(
+                      "\r\n                        " +
+                        _vm._s(items.value) +
+                        "\r\n                "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "actions",
+                fn: function(items) {
+                  return [
+                    _vm.can("/user/edit")
+                      ? _c(
+                          "a",
+                          {
+                            staticClass:
+                              "btn btn-secondary btn-sm btn-icon icon-left",
+                            attrs: { href: "javascript:void(0);" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.editUser(items.item.user_id)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\r\n                            修改\r\n                        "
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.can("/user/del")
+                      ? _c(
+                          "a",
+                          {
+                            staticClass:
+                              "btn btn-danger btn-sm btn-icon icon-left",
+                            attrs: { href: "javascript:void(0);" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.$refs.table.onDel(items.item.user_id)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\r\n                            删除\r\n                        "
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-info btn-sm btn-icon icon-left",
+                        attrs: { href: "javascript:void(0);" }
+                      },
+                      [
+                        _vm._v(
+                          "\r\n                            详情\r\n                        "
+                        )
+                      ]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("h3", { staticClass: "panel-title" }, [_vm._v("员工列表")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-154bc3b8", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-21aa11ee\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/structure/depa/Edit.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-21aa11ee", module.exports)
   }
 }
 
@@ -50269,6 +51109,27 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-3c947e4f", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-403a60c6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/structure/depa/List.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-403a60c6", module.exports)
   }
 }
 
@@ -51876,526 +52737,6 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-9eb7908e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/user/Edit.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-sm-12" }, [
-    _c("div", { staticClass: "panel panel-default" }, [
-      _c("div", { staticClass: "panel-heading" }, [
-        _c("h3", { staticClass: "panel-title" }, [
-          _vm._v(_vm._s(_vm.formData.user_id ? "修改用户" : "新建用户"))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "panel-body" }, [
-        _c(
-          "form",
-          {
-            ref: "user-form",
-            staticClass: "form-horizontal",
-            attrs: { role: "form" }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                class: _vm.errors.has("username") ? "has-error" : ""
-              },
-              [
-                _c("label", { staticClass: "col-sm-1 control-label" }, [
-                  _vm._v("账 号")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-7" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.trim",
-                        value: _vm.formData.username,
-                        expression: "formData.username",
-                        modifiers: { trim: true }
-                      },
-                      {
-                        name: "validate",
-                        rawName: "v-validate",
-                        value: {
-                          required: true,
-                          alpha_dash: true,
-                          max: 20,
-                          min: 6
-                        },
-                        expression:
-                          "{ required:true, alpha_dash: true, max:20, min:6 }"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: "username",
-                      "data-vv-as": "账号",
-                      autocomplete: "off"
-                    },
-                    domProps: { value: _vm.formData.username },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "username",
-                          $event.target.value.trim()
-                        )
-                      },
-                      blur: function($event) {
-                        _vm.$forceUpdate()
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "help-block" }, [
-                  _vm._v(" " + _vm._s(_vm.errors.first("username")))
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                class: _vm.errors.has("name") ? "has-error" : ""
-              },
-              [
-                _c("label", { staticClass: "col-sm-1 control-label" }, [
-                  _vm._v("姓名")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-7" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "validate",
-                        rawName: "v-validate",
-                        value: { required: true, zh_char: [2, 10] },
-                        expression: "{ required:true, zh_char:[2,10]}"
-                      },
-                      {
-                        name: "model",
-                        rawName: "v-model.trim",
-                        value: _vm.formData.name,
-                        expression: "formData.name",
-                        modifiers: { trim: true }
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: "name",
-                      placeholder: "",
-                      "data-vv-as": "姓名",
-                      autocomplete: "off"
-                    },
-                    domProps: { value: _vm.formData.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "name",
-                          $event.target.value.trim()
-                        )
-                      },
-                      blur: function($event) {
-                        _vm.$forceUpdate()
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "help-block" }, [
-                  _vm._v(" " + _vm._s(_vm.errors.first("name")))
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { staticClass: "col-sm-1 control-label" }, [
-                _vm._v("头像")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-7" }, [
-                _c(
-                  "div",
-                  { staticStyle: { width: "128px", height: "128px" } },
-                  [
-                    _c("img", {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.formData.avatar,
-                          expression: "formData.avatar"
-                        }
-                      ],
-                      staticStyle: { width: "100%", height: "100%" },
-                      attrs: { src: _vm.formData.avatar }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticStyle: { "margin-top": "10px" } },
-                  [_c("ImgCropper", { on: { cropperImg: _vm.getFileInfo } })],
-                  1
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                class: _vm.errors.has("mobile") ? "has-error" : ""
-              },
-              [
-                _c("label", { staticClass: "col-sm-1 control-label" }, [
-                  _vm._v("手机号")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-7" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "validate",
-                        rawName: "v-validate",
-                        value: { required: true, mobile: true },
-                        expression: "{ required:true, mobile:true }"
-                      },
-                      {
-                        name: "model",
-                        rawName: "v-model.trim",
-                        value: _vm.formData.mobile,
-                        expression: "formData.mobile",
-                        modifiers: { trim: true }
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: "mobile",
-                      placeholder: "",
-                      autocomplete: "off"
-                    },
-                    domProps: { value: _vm.formData.mobile },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "mobile",
-                          $event.target.value.trim()
-                        )
-                      },
-                      blur: function($event) {
-                        _vm.$forceUpdate()
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "help-block" }, [
-                  _vm._v(" " + _vm._s(_vm.errors.first("mobile")))
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                class: _vm.errors.has("email") ? "has-error" : ""
-              },
-              [
-                _c("label", { staticClass: "col-sm-1 control-label" }, [
-                  _vm._v("邮 箱")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-7" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "validate",
-                        rawName: "v-validate",
-                        value: { required: true, email: true },
-                        expression: "{ required:true, email:true }"
-                      },
-                      {
-                        name: "model",
-                        rawName: "v-model.trim",
-                        value: _vm.formData.email,
-                        expression: "formData.email",
-                        modifiers: { trim: true }
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: "email",
-                      placeholder: "",
-                      autocomplete: "off"
-                    },
-                    domProps: { value: _vm.formData.email },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "email",
-                          $event.target.value.trim()
-                        )
-                      },
-                      blur: function($event) {
-                        _vm.$forceUpdate()
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "help-block" }, [
-                  _vm._v(" " + _vm._s(_vm.errors.first("email")))
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                class: _vm.errors.has("depa_id") ? "has-error" : ""
-              },
-              [
-                _c("label", { staticClass: "col-sm-1 control-label" }, [
-                  _vm._v("部 门")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-7" }, [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.depa_id,
-                          expression: "formData.depa_id"
-                        },
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: { select_id: true },
-                          expression: "{ select_id:true }"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { name: "depa_id", "data-vv-as": "部门" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.formData,
-                            "depa_id",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "0" } }, [
-                        _vm._v("请选择")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "1" } }, [
-                        _vm._v("总公司")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "2" } }, [
-                        _vm._v("销售部")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "3" } }, [
-                        _vm._v("研发部")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "4" } }, [
-                        _vm._v("宣传部")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "help-block" }, [
-                  _vm._v(" " + _vm._s(_vm.errors.first("depa_id")))
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { staticClass: "col-sm-1 control-label" }, [
-                _vm._v("性 别")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-7" }, [
-                _c("p", [
-                  _c("label", { staticClass: "cbr-inline" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "cbr-replaced cbr-primary cbr-radio",
-                        class: { "cbr-checked": _vm.formData.sex == 1 }
-                      },
-                      [
-                        _c("div", { staticClass: "cbr-input" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.sex,
-                                expression: "formData.sex"
-                              }
-                            ],
-                            staticClass: "cbr cbr-done",
-                            attrs: { type: "radio", name: "sex", value: "1" },
-                            domProps: {
-                              checked: _vm._q(_vm.formData.sex, "1")
-                            },
-                            on: {
-                              change: function($event) {
-                                _vm.$set(_vm.formData, "sex", "1")
-                              }
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _vm._m(0)
-                      ]
-                    ),
-                    _vm._v("\n\t\t\t\t\t\t\t\t男\n\t\t\t\t\t\t\t")
-                  ]),
-                  _vm._v(" "),
-                  _c("label", { staticClass: "cbr-inline" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "cbr-replaced cbr-primary cbr-radio",
-                        class: { "cbr-checked": _vm.formData.sex == 2 }
-                      },
-                      [
-                        _c("div", { staticClass: "cbr-input" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.sex,
-                                expression: "formData.sex"
-                              }
-                            ],
-                            staticClass: "cbr cbr-done",
-                            attrs: { type: "radio", name: "sex", value: "2" },
-                            domProps: {
-                              checked: _vm._q(_vm.formData.sex, "2")
-                            },
-                            on: {
-                              change: function($event) {
-                                _vm.$set(_vm.formData, "sex", "2")
-                              }
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _vm._m(1)
-                      ]
-                    ),
-                    _vm._v("\n\t\t\t\t\t\t\t\t女\n\t\t\t\t\t\t\t")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { staticClass: "col-sm-1 control-label" }),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-7" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-gray  pull-right",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.formSubmit()
-                      }
-                    }
-                  },
-                  [_vm._v("提 交")]
-                )
-              ])
-            ])
-          ]
-        )
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cbr-state" }, [_c("span")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cbr-state" }, [_c("span")])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-9eb7908e", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a2678462\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/common/Table.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -52534,301 +52875,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-a2678462", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-bd47df66\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/user/List.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "panel panel-default" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "panel-body" }, [
-      _c(
-        "div",
-        { staticClass: "form-inline dt-bootstrap" },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-xs-2" }, [
-              _c("div", { staticClass: "from-group" }, [
-                _c("label", [
-                  _vm._v("每页 \r\n                            "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.limit,
-                          expression: "limit"
-                        }
-                      ],
-                      staticClass: "form-control input-sm",
-                      attrs: { name: "limit" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.limit = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "5" } }, [_vm._v("5")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "20" } }, [_vm._v("20")])
-                    ]
-                  ),
-                  _vm._v(" 条 \r\n                        ")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-xs-8" }, [
-              _c("div", { staticClass: "pull-left" }, [
-                _c("label", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.trim",
-                        value: _vm.params.keywords,
-                        expression: "params.keywords",
-                        modifiers: { trim: true }
-                      }
-                    ],
-                    staticClass: "form-control input-sm",
-                    attrs: {
-                      type: "text",
-                      name: "keywords",
-                      placeholder: "用户名/账户"
-                    },
-                    domProps: { value: _vm.params.keywords },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.params,
-                          "keywords",
-                          $event.target.value.trim()
-                        )
-                      },
-                      blur: function($event) {
-                        _vm.$forceUpdate()
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "pull-left",
-                  staticStyle: { "margin-left": "10px" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-gray btn-sm",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.doSearch()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fa fa-search" })]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-xs-2" }, [
-              _vm.can("/user/edit")
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-turquoise btn-sm",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.editUser()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fa fa-users" }), _vm._v(" 新建")]
-                  )
-                : _vm._e()
-            ])
-          ]),
-          _vm._v(" "),
-          _c("vTable", {
-            ref: "table",
-            attrs: {
-              ajaxUrl: _vm.ajaxUrl,
-              params: _vm.params,
-              lists: _vm.lists,
-              perPage: _vm.limit,
-              ths: _vm.ths,
-              del: _vm.del
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "username",
-                fn: function(items) {
-                  return [
-                    _vm._v(
-                      "\r\n                        " +
-                        _vm._s(items.value) +
-                        "\r\n                "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "name",
-                fn: function(items) {
-                  return [
-                    _vm._v(
-                      "\r\n                        " +
-                        _vm._s(items.value) +
-                        "\r\n                "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "depa",
-                fn: function(items) {
-                  return [
-                    _vm._v(
-                      "\r\n                        " +
-                        _vm._s(items.value ? items.value.name : "") +
-                        "\r\n                "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "created_at",
-                fn: function(items) {
-                  return [
-                    _vm._v(
-                      "\r\n                        " +
-                        _vm._s(items.value) +
-                        "\r\n                "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "actions",
-                fn: function(items) {
-                  return [
-                    _vm.can("/user/edit")
-                      ? _c(
-                          "a",
-                          {
-                            staticClass:
-                              "btn btn-secondary btn-sm btn-icon icon-left",
-                            attrs: { href: "javascript:void(0);" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.editUser(items.item.user_id)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\r\n                            修改\r\n                        "
-                            )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.can("/user/del")
-                      ? _c(
-                          "a",
-                          {
-                            staticClass:
-                              "btn btn-danger btn-sm btn-icon icon-left",
-                            attrs: { href: "javascript:void(0);" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.$refs.table.onDel(items.item.user_id)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\r\n                            删除\r\n                        "
-                            )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-info btn-sm btn-icon icon-left",
-                        attrs: { href: "javascript:void(0);" }
-                      },
-                      [
-                        _vm._v(
-                          "\r\n                            详情\r\n                        "
-                        )
-                      ]
-                    )
-                  ]
-                }
-              }
-            ])
-          })
-        ],
-        1
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-heading" }, [
-      _c("h3", { staticClass: "panel-title" }, [_vm._v("员工列表")])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-bd47df66", module.exports)
   }
 }
 
@@ -68309,6 +68355,246 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/components/notify/List.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-093ec90f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/notify/List.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\components\\notify\\List.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-093ec90f", Component.options)
+  } else {
+    hotAPI.reload("data-v-093ec90f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/components/structure/depa/Edit.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-21aa11ee\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/structure/depa/Edit.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\components\\structure\\depa\\Edit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-21aa11ee", Component.options)
+  } else {
+    hotAPI.reload("data-v-21aa11ee", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/components/structure/depa/List.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-403a60c6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/structure/depa/List.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\components\\structure\\depa\\List.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-403a60c6", Component.options)
+  } else {
+    hotAPI.reload("data-v-403a60c6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/components/structure/user/Edit.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/components/structure/user/Edit.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-04a24590\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/structure/user/Edit.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\components\\structure\\user\\Edit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-04a24590", Component.options)
+  } else {
+    hotAPI.reload("data-v-04a24590", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/components/structure/user/List.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/components/structure/user/List.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-154bc3b8\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/structure/user/List.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\components\\structure\\user\\List.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-154bc3b8", Component.options)
+  } else {
+    hotAPI.reload("data-v-154bc3b8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/components/system/node/ChildLi.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68605,102 +68891,6 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/components/user/Edit.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/components/user/Edit.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-9eb7908e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/user/Edit.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\components\\user\\Edit.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-9eb7908e", Component.options)
-  } else {
-    hotAPI.reload("data-v-9eb7908e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/components/user/List.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/components/user/List.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-bd47df66\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/components/user/List.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\components\\user\\List.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-bd47df66", Component.options)
-  } else {
-    hotAPI.reload("data-v-bd47df66", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
 /***/ "./resources/assets/js/datatables/dataTables.bootstrap.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68822,11 +69012,17 @@ router.beforeEach(function (to, from, next) {
   var strPath = to.path.replace(/\/\d+$/, '');
 
   if (to.path != '/' && __WEBPACK_IMPORTED_MODULE_3__store_index_js__["a" /* default */].state.permissions.indexOf(strPath) === -1) {
+
     setTimeout(function () {
       toastr.error('您没有访问权限!');
     }, 0);
     next(false);
   } else {
+    // 储存当前选中siderbar
+    if (to.meta.parent) {
+      __WEBPACK_IMPORTED_MODULE_3__store_index_js__["a" /* default */].state.modular.parent = to.meta.parent;
+      __WEBPACK_IMPORTED_MODULE_3__store_index_js__["a" /* default */].state.modular.child = to.path;
+    }
     next();
   }
 });
@@ -69031,14 +69227,42 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_progressbar___default.a, progressOption)
 		path: 'list',
 		name: '员工列表',
 		meta: { 'parent': '/structure' },
-		component: __webpack_require__("./resources/assets/components/user/List.vue")
+		component: __webpack_require__("./resources/assets/components/structure/user/List.vue")
 	}, {
 		path: 'edit/:user_id?',
 		name: '修改/新增员工',
 		meta: { 'parent': '/structure' },
-		component: __webpack_require__("./resources/assets/components/user/Edit.vue")
+		component: __webpack_require__("./resources/assets/components/structure/user/Edit.vue")
+	}]
+}, {
+	path: '/depa',
+	component: __WEBPACK_IMPORTED_MODULE_0__components_layouts_Parent_vue___default.a,
+	name: '部门管理',
+
+	children: [{
+		path: 'list',
+		name: '部门列表',
+		meta: { 'parent': '/structure' },
+		component: __webpack_require__("./resources/assets/components/structure/depa/List.vue")
+	}, {
+		path: 'edit/:user_id?',
+		name: '修改/新增部门',
+		meta: { 'parent': '/structure' },
+		component: __webpack_require__("./resources/assets/components/structure/depa/Edit.vue")
+	}]
+}, {
+	path: '/notify',
+	component: __WEBPACK_IMPORTED_MODULE_0__components_layouts_Parent_vue___default.a,
+	name: '消息管理',
+
+	children: [{
+		path: 'list',
+		name: '消息列表',
+		meta: { 'parent': '/notify' },
+		component: __webpack_require__("./resources/assets/components/notify/List.vue")
 	}]
 },
+
 //公共路由
 {
 	path: 'error',
@@ -69076,6 +69300,10 @@ var state = {
 	auth: window.auth,
 	permissions: window.permissions,
 	menuTree: window.menuTree,
+	modular: {
+		parent: '',
+		child: ''
+	},
 	nodeModalData: {},
 	checkNodes: []
 };

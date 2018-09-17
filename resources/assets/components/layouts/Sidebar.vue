@@ -29,17 +29,15 @@
                     </div>                                
                 </header>
                         
-                
-                        
                 <ul id="main-menu" class="main-menu">
                    <!--  add class "multiple-expanded" to allow multiple submenus to open
                     class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-                    <li v-for="menu in menuTree" :class="{'expanded active': menu.action == modular.parent}">
+                    <li v-for="menu in menuTree" :class="{'opened expanded active': menu.action == modular.parent}">
                         <a href="#">
                             <i :class="menu.linecons"></i>
                             <span class="title">{{ menu.title }}</span>
                         </a>
-                        <ul  v-show="menu.action == modular.parent" style="display: block">
+                        <ul >
                             <li v-for="child in menu.child" :class="{ 'active': child.action == modular.child }">
                                 <router-link :to="child.action">
                                     <span class="title">{{ child.title }}</span>
@@ -58,17 +56,9 @@
     import { mapState, mapActions, mapGetters} from 'vuex';
     export default {
         computed: {
-            ...mapState(['menuTree']),
+            ...mapState(['menuTree', 'modular']),
         },
-        data(){
-            return {
-                modular: {
-                    parent:this.$route.meta.parent,
-                    child : this.$route.path 
-                },
-            }
-        },
-        mounted() {
+        created() {
 
         }
     }
